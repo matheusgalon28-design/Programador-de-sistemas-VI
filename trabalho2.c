@@ -372,3 +372,305 @@ while(heroi->vida>0&&monstro.vida>0&&!fugiu){
 		}
 		break;
 	
+default:
+printf("\n opcao invalida vc perdeu a vez\n");
+danorecebido = caculardanorecebido(*heroi,monstro.ataque,0);
+ heroi->vida -= danorecebido;
+ printf("o %s atacou vc  causou %d dano\n",monstro.nome,danorecebido);
+	break;}
+}
+if(heroi->vida<0){
+heroi->vida = 0;}
+}
+if(heroi->vida<=0){
+	printf("\n !GAME OVER! vc foi derrotado pelo %s.\n",monstro.nome);
+}
+else if (monstro.vida<=0){
+	printf("\n%s !derrotado!\n",monstro.nome);
+	printf("+% XP\n",monstro.recompensaxp);
+	printf("+%d ouro\n",monstro.recompensaouro");
+    heroi->experiencia +=monstro.recompensaxp;
+	heroi->ouro + = monstro.recompensaouro;subirnivel(heroi);
+}
+}
+int calculardanorecebido(personagem heroi,int ataquemonstro,int defendendo);
+{
+	int dano =ataquemonstro-heroi.defesa;
+	if(dano<1){
+	dano = 1;
+	}
+	if (defendendo){
+		dano = dano /2;
+	if (dano < 1){
+	dano = 1 ;
+	}
+    }
+	return dano;
+}
+void subirnivel(personagem*heroi){
+	while(hero->=experiencia>=xp_para_subir_nivel){
+		heroi->experiencia -=xp_para_subir_nivel;
+		heroi->nivel++;
+		heroi->ataque += 5;
+		heroi->defesa += 3;
+		heroi->vidamaxima;
+		printf("\nParabens!Voce subiu para o nivel %d.\n",heroi->nivel);
+		printf("ataque +5|defesa +3|vida maxima +20\n");
+		printf("sua vida foi restaurada.\n");
+	}
+}
+void loja (personagem*heroi,int inventario[]){
+	int opcao;
+	int item = item_vazio;
+int preso = 0;
+if(!existepersonagem(*heroi)||!personagemvivo(*heroi)){return;
+}
+do {
+printf("\n ====================================loja==================\n");
+printf("ouro atual:%d\n",heroi->ouro);
+itf("1 - pocao pequena -20 ouro\n");
+printf("2 - pocao grande -40 ouro\n");
+printf("3 - espada - 100 ouro\n");
+printf("4 - armadura  - 120 ouro\n");;
+printf("5 - escudo - 80 ouro\n");
+printf("0 - voltar\n");
+printf("escolha:");
+opcao = leropcao();
+swich (opcao)}
+case 1:
+item = pocao_pequena;
+preco = 20;
+break;
+case 2 : 
+item  = pocao_grande;
+preco = 40;  
+break;
+case 3 :
+item = espada ;
+preco = 100;
+break;
+case 4 :
+item = armadura;
+preco = 120;
+break;
+case 5 :
+item = escudo;
+preco = 80;
+break;
+case 0;
+printf("\nvoltando ao menu principal\n");
+continue;
+defaut: 
+print("\nopcao invalida\n");
+continue;
+}
+if(heroi->ouro<preco){
+printf("\nouro insuficiente para comprar%s.\n",nomeitem(item));
+}else if(!adicionar item(inventario,item)){
+printf("\ninventario cheio.Nao foi possivel comprar o item .\n");
+}else{
+heroi->ouro-=preco;
+printf("\nvc comprou:%s.\n",nomeitem(item));
+	printf("ouro restante:%d\n",heroi->ouro);
+}
+}while(opcao!=0);
+}
+void menuinventario(personagem*heroi,int inventario[]){
+int opcao;
+if(!existepersonagem(*heroi)){
+return;
+}
+do{
+printf("\n-----------------------------------------------------------------------inventario=======================\n");
+
+printf("1 - visualizar itens\n");
+printf("2 - usar item \n");
+printf("3 - descartar item\n"
+printf(" 0 - voltar\n");
+printf("escolha:");
+opcao = leropcao();
+
+swich(opcao){
+	
+	case1: 
+	visualizarinventario(inventario);
+	break;
+	case 2:
+	if(personagemvivo(*heroi)){
+		usaritem(heroi,inventario);
+	}
+	break;
+	case 3:
+	descartaritem(inventario);
+	break;
+	case 0:
+	printf("\nvoltando ao mundo principal...\n");
+	break;
+	default:
+	printf(\n"opcao invaild.\n");
+	break;
+}
+}while(opcao!=0);
+}
+void visualizar inventario(int inventario:[]){int vazio = 1;
+for(int i = 0; <tam_inventario;i++){
+	if(inventario[i]!=item_vazio){
+		printf(%d-%s\n",i+1,
+		nomeitem(inventario[1]));
+		vazio = 0;
+	}
+}
+if (vazio){
+	printf("inventario vazio.\n");
+}
+}
+if(vazio){
+	printf("inventario vazio".\n);
+}
+}
+void usaritem(personagem,*heroi,int,invenatrio[]){
+	int posicao;
+	int item;
+	printf("\ndigite a posicao do item que deseja usar:");
+	posicao = leropcao();
+	posicao--;
+	if(posicao< 0||posicao>=tam_inventario||inventario[posicao]==item_vazio{
+	printf("\nitem invalido.\n");
+return;
+	}
+item= inventario[posicao];
+switch(item){
+	case pocao_pequena:
+	heroi-> vida+=20;
+	if(heroi->vida>heroi->vidamaxima){
+		heroi->vida=heroi->vidamaxima;
+	}
+	printf("\nvc usou uma pocao pequena e recuperou vida.\n");
+	removeritem(inventario,posicao);
+	break;
+	
+	case pocao_grande:
+	heroi->vida+=50;
+	if(heroi->vida>heroi->vidamaxima){
+		heroi->vida=heroi->vidamaxima;
+	}
+	printf("\nvc usou uma pocao grande e  recuperou vida.\n");
+	removeritem(intentario,posicao);
+	break;
+	
+	case espada:
+	heroi->ataque+=5;
+	printf("\nvc equipou uma espada.ataque+5.\n");
+	removerintem(intario,posicao);
+	break;
+	
+	case armadura:
+	heroi->defesa +=5;
+	printf("\nvc equipou uma armadura defesa + 5.\n");
+	removeritem(inventario,posicao);
+	break;
+	
+	case escudo:
+	heroi->defesa +=3;
+	printf("\nvc equipou um escudo. defesa+3\n");
+	removeritem(inventario,posicao);
+	break;
+	default;
+	printf("\n este item nao pode ser usado.\n");
+	break;
+}
+}
+void descartaitem(int inventario[]){
+	int posicao;
+	visualizarinventario(inventario);
+	printf("\ndigite a posicao do item que deseja descartar.");
+	posicao=leropcao();
+	posicao--;
+	if(posicao<0||posicao.=tam_inventario||inventario[posicao]==item_vazio){
+		printf("\nitem invalido.\n");
+		return;
+	}
+printf("\nvc descartou :%s.\n",nomeitem(inventario[posicao](inventario[posicao]));
+removeritem(inventario,posicao);
+}
+void descansar(personagem=*heroi){
+	int vidaantes;
+	if(!existepersonagem(*heroi)||!
+	personagemvivo(*heroi)){
+		return;
+	}
+	vidantes=heroi->vida;
+	heroi->vida +=30;
+ if(heroi->vida>heroi->vidamaxima){
+heroi->=heroi->vidamaxima;
+ }
+ printf(\n"vc descansou em seguranca.\n");
+ printf("vida antes:%d\n",vidaantes);
+ printf("vida atual:%d\%d\n",heroi->vida heroi->vida maxima);
+}
+void chefefinal(personagem*heroi){
+monstro dragon = ("dragon das sombras" ,300,25,200,300};
+if(!existepersonagem(*heroi)||!
+personagemvivo(*heroi){
+	return;
+}
+if(heroi->nivel<5){
+	printf(\n"vc ainda nao esta preparado paa enfrentar o drafon.\n");
+	printf("nivel necessario:5|seu nivel:%d\n",heroi->nivel);
+	return;
+}
+printf(\n"o dragon das sombras surge diante de vc!\n");
+printf("esta e a batalha final pelo destino do reino de c-nai.\n");
+combate(heroi,dragon);
+if(heroi->vida>0){
+	
+	printf("\n===============================================================\n");
+	printf("PARABENS!VC DERROTOU O DRAGON DAS SOMBRAS!\n");
+	printf("o reino de c-nai foi salvo pelo heroi%s.\n",heroi->nome);
+	printf("============================================================================================================================================\n");
+}
+ }
+ int adicionaritem(int inventario[],int item){
+	 for(int i = 0;i<tam_inventario;i++){
+		 if(inventario[i]==item_vazio){
+			 inventario[i]=item;
+			 
+			 return 1;
+		 }
+		 
+	 }
+	 return 0;
+ }
+ void removeritem(item inventario[],int posicao) {
+	 if(posicao<0||posicao>==tam_inventario)
+	 {
+		 return;
+	 }
+	 for(int=posicao;i<tam_invenatrio-1;i++){
+	 inventario[i]=inventario[i+1];
+	 }
+	 inventario[tam_inventario-1]= item_vazio;
+ }
+ const char *nomeitem(int item){
+	 swich(item){
+		 case pocao_pequena:
+		 return"pocao pequena";
+		  
+		  const char*nomeitem(int item){
+			  swich(item){
+				  case pocao_pequena:
+				  return"pocao pequena";
+				  case pocao_grande:
+				  return "pocao_grande";
+				  case espada:
+				  return "espada";
+				  case armadura:
+				  return "armadura";
+				  case escudo:
+				  return"escudo";
+				  default:
+				  
+				  return"item vazio";
+			  }
+		  }
+		 
