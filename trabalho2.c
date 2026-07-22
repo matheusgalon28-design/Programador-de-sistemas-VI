@@ -3,26 +3,26 @@
 #include <string.h>
 #include <time.h>
 
-#define TAM_INVENTARIO 20
-#define VIDA_INICIAL 100
-#define ATAQUE_INICIAL 10
-#define DEFESA_INICIAL 5
-#define OURO_INICIAL 50
-#define XP_PARA_SUBIR_NIVEL 100
+#define  tam_inventario 20
+#define  vida_inicial 100
+#define ataque_inicial 10
+#define defesa_inicial 5
+#define ouro_inicial 50
+#define xp_para_subir_nivel 100
 
 enum Itens {
-    ITEM_VAZIO = 0,
-    POCAO_PEQUENA = 1,
-    POCAO_GRANDE = 2,
-    ESPADA = 3,
-    ARMADURA = 4,
-    ESCUDO = 5
+    item_vazio = 0,
+    pocao_pequena = 1,
+    pocao_grande = 2,
+    espada = 3,
+    armadura = 4,
+    escudo = 5
 };
 
 typedef struct {
     char nome[50];
     int vida;
-    int vidaMaxima;
+    int vidamaxima;
     int ataque;
     int defesa;
     int nivel;
@@ -35,42 +35,42 @@ typedef struct {
     char nome[30];
     int vida;
     int ataque;
-    int recompensaXp;
-    int recompensaOuro;
-} Monstro;
+    int recompensaxp;
+    int recompensaouro;
+} monstro;
 
-void limparBuffer();
+void limparbuffer();
 void pausar();
-int lerOpcao();
-void criarPersonagem(Personagem *heroi, int inventario[]);
-void mostrarStatus(Personagem heroi);
-void explorarMapa(Personagem *heroi, int inventario[]);
-void combate(Personagem *heroi, Monstro monstro);
-void subirNivel(Personagem *heroi);
+int leropcao();
+void criarpersonagem(Personagem *heroi, int inventario[]);
+void mostrarstatus(Personagem heroi);
+void explorarmapa(Personagem *heroi, int inventario[]);
+void combate(Personagem *heroi, monstro monstro);
+void subirnivel(Personagem *heroi);
 void loja(Personagem *heroi, int inventario[]);
-void menuInventario(Personagem *heroi, int inventario[]);
-void visualizarInventario(int inventario[]);
-void usarItem(Personagem *heroi, int inventario[]);
-void descartarItem(int inventario[]);
+void menuinventario(Personagem *heroi, int inventario[]);
+void visualizarinventario(int inventario[]);
+void usaritem(Personagem *heroi, int inventario[]);
+void descartaritem(int inventario[]);
 void descansar(Personagem *heroi);
-void chefeFinal(Personagem *heroi);
-int adicionarItem(int inventario[], int item);
-void removerItem(int inventario[], int posicao);
-const char *nomeItem(int item);
-int existePersonagem(Personagem heroi);
-int personagemVivo(Personagem heroi);
-int calcularDanoRecebido(Personagem heroi, int ataqueMonstro, int defendendo);
+void chefefinal(Personagem *heroi);
+int adicionaritem(int inventario[], int item);
+void removeritem(int inventario[], int posicao);
+const char *nomeitem(int item);
+int existepersonagem(Personagem heroi);
+int personagemvivo(Personagem heroi);
+int calculardanorecebido(Personagem heroi, int ataquemonstro, int defendendo);
 
 int main() {
-    Personagem heroi;
-    int inventario[TAM_INVENTARIO];
+    struct Personagem heroi;
+    int inventario[tam_inventario];
     int opcao;
 
     srand(time(NULL));
 
     heroi.criado = 0;
-    for (int i = 0; i < TAM_INVENTARIO; i++) {
-        inventario[i] = ITEM_VAZIO;
+    for (int i = 0; i < tam_inventario; i++) {
+        inventario[i] = item_vazio;
     }
 
     do {
@@ -555,13 +555,13 @@ switch(item){
 		heroi->vida=heroi->vidamaxima;
 	}
 	printf("\nvc usou uma pocao grande e  recuperou vida.\n");
-	removeritem(intentario,posicao);
+	removeritem(inventario,posicao);
 	break;
 	
 	case espada:
 	heroi->ataque+=5;
 	printf("\nvc equipou uma espada.ataque+5.\n");
-	removerintem(intario,posicao);
+	removerintem(inventario,posicao);
 	break;
 	
 	case armadura:
