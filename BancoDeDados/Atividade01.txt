@@ -1,0 +1,215 @@
+
+
+		CREATE TABLE departamento (
+	    codigo_departamento SERIAL PRIMARY KEY,
+	    nome VARCHAR(100) NOT NULL,
+	    area_atuacao VARCHAR(100) NOT NULL
+	);
+		INSERT INTO departamento (nome,area_atuacao) VALUES ('livro 100', 'blioteca 100');
+		INSERT INTO departamento (nome,area_atuacao) VALUES ('casa do guilhemo 100', 'baa');
+	    INSERT INTO departamento (nome,area_atuacao) VALUES ('casa do gababriel 100','descanso');
+		INSERT INTO departamento (nome,area_atuacao) VALUES ('casa do josomar 100','trabalho');
+	    INSERT INTO departamento (nome,area_atuacao) VALUES ('casas do enzo rico  100','viajando');
+		INSERT INTO departamento (nome,area_atuacao) VALUES ('casa do aderlelei 100','farmando aura da 13:30 ate as 19:30');
+	
+		
+		CREATE TABLE espaco (
+	    id_espaco SERIAL PRIMARY KEY,
+	    nome VARCHAR(100) NOT NULL,
+	    capacidade_maxima INTEGER NOT NULL,
+	    localizacao VARCHAR(200) NOT NULL
+	);
+		INSERT INTO espaco (nome,capacidade_maxima,localizacao) VALUES('leconde',250,'centro');
+		INSERT INTO espaco (nome,capacidade_maxima,localizacao) VALUES('segurança de shows do cletin das armas',250,'rio de janeiro na periferia dos cletin das armas');
+		INSERT INTO espaco (nome,capacidade_maxima,localizacao) VALUES('churrasco',250,'na casa do cletin das armasno estado de rio de janeiro');
+		INSERT INTO espaco (nome,capacidade_maxima,localizacao) VALUES ('padaria',250,'centro');
+		INSERT INTO espaco (nome,capacidade_maxima,localizacao) VALUES ('loja de roupas',250,'centro');
+	
+		CREATE TABLE evento (
+	    codigo_evento SERIAL PRIMARY KEY,
+	    nome VARCHAR(150) NOT NULL,
+	    descricao TEXT,
+	    data_realizacao DATE NOT NULL,
+	    carga_horaria INTEGER NOT NULL,
+	
+	    codigo_departamento INTEGER NOT NULL,
+	    id_espaco INTEGER NOT NULL,
+	
+	    	CONSTRAINT fk_evento_departamento
+	        FOREIGN KEY (codigo_departamento)
+	        REFERENCES departamento(codigo_departamento),
+	
+	    	CONSTRAINT fk_evento_espaco
+	        FOREIGN KEY (id_espaco)
+	        REFERENCES espaco(id_espaco)
+	);
+
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ('Batalha','Batalha Naval','2026-09-02',1300,1,1);
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ('batalha','batlha navla de farmar edided','2026-09-10',1234,1,2);
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ('batalha',' farmar aura com 67','2026-10-12',1566,1,2);
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ('')
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ()
+	INSERT INTO	evento (nome,descricao,data_realizacao,carga_horaria,codigo_departamento,id_espaco)	VALUES ()
+	
+		CREATE TABLE palestrante (
+	    id_palestrante SERIAL PRIMARY KEY,
+	    nome_completo VARCHAR(150) NOT NULL,
+	    email VARCHAR(150) NOT NULL,
+	    telefone VARCHAR(20),
+	    instituicao_origem VARCHAR(150)
+	);
+	
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+
+
+				
+		
+		
+		CREATE TABLE participacao_palestrante (
+	    id_participacao SERIAL PRIMARY KEY,
+	
+	    id_palestrante INTEGER NOT NULL,
+	    codigo_evento INTEGER NOT NULL,
+	
+	    	CONSTRAINT fk_participacao_palestrante
+	        FOREIGN KEY (id_palestrante)
+	        REFERENCES palestrante(id_palestrante),
+	
+	   	 	CONSTRAINT fk_participacao_evento
+	        FOREIGN KEY (codigo_evento)
+	        REFERENCES evento(codigo_evento),
+	
+	    	CONSTRAINT uk_palestrante_evento
+	        UNIQUE (id_palestrante, codigo_evento)
+	);
+
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+    
+
+	
+
+	
+		CREATE TABLE estudante (
+	    matricula VARCHAR(20) PRIMARY KEY,
+	    nome_completo VARCHAR(150) NOT NULL,
+	    curso VARCHAR(100) NOT NULL,
+	    periodo INTEGER NOT NULL,
+	    email_institucional VARCHAR(150) NOT NULL
+	);
+	
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+		
+		CREATE TABLE inscricao (
+	    id_inscricao SERIAL PRIMARY KEY,
+	
+	    data_inscricao DATE NOT NULL,
+	
+	    situacao VARCHAR(30) NOT NULL
+	        CHECK (
+	            situacao IN (
+	                'INSCRITO',
+	                'CONFIRMADO',
+	                'CANCELADO',
+	                'CERTIFICADO'
+	            )
+	        ),
+	
+	    matricula VARCHAR(20) NOT NULL,
+	    codigo_evento INTEGER NOT NULL,
+	
+	    	CONSTRAINT fk_inscricao_estudante
+	        FOREIGN KEY (matricula)
+	        REFERENCES estudante(matricula),
+	
+	    	CONSTRAINT fk_inscricao_evento
+	        FOREIGN KEY (codigo_evento)
+	        REFERENCES evento(codigo_evento),
+	
+	    	CONSTRAINT uk_estudante_evento
+	        UNIQUE (matricula, codigo_evento)
+	);
+	
+
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+
+
+		
+			CREATE TABLE certificado (
+		    numero_certificado SERIAL PRIMARY KEY,
+		
+		    data_emissao DATE NOT NULL,
+		    carga_horaria_validada INTEGER NOT NULL,
+		
+		    id_inscricao INTEGER UNIQUE NOT NULL,
+		
+		    	CONSTRAINT fk_certificado_inscricao
+		        FOREIGN KEY (id_inscricao)
+		        REFERENCES inscricao(id_inscricao)
+	);
+
+
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+
+
+
+	
+	CREATE TABLE patrocinador (
+	    cnpj VARCHAR(18) PRIMARY KEY,
+	    nome VARCHAR(150) NOT NULL,
+	    telefone VARCHAR(20),
+	    cidade_origem VARCHAR(100)
+	);
+
+
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+	
+	CREATE TABLE patrocinio (
+	    id_patrocinio SERIAL PRIMARY KEY,
+	
+	    cnpj VARCHAR(18) NOT NULL,
+	    codigo_evento INTEGER NOT NULL,
+	
+	    CONSTRAINT fk_patrocinio_patrocinador
+	        FOREIGN KEY (cnpj)
+	        REFERENCES patrocinador(cnpj),
+	
+	    CONSTRAINT fk_patrocinio_evento
+	        FOREIGN KEY (codigo_evento)
+	        REFERENCES evento(codigo_evento),
+	
+	    CONSTRAINT uk_patrocinador_evento
+	        UNIQUE (cnpj, codigo_evento)
+	);
+
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO
+	INSERT INTO	
+	
+	
